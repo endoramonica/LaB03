@@ -1,0 +1,318 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Nguyễn Mai Anh</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #e0e0e0; /* Light grey background for the page */
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .cv-container {
+            width: 900px;
+            margin: 40px auto;
+            border-radius: 50%;
+            background-color: #fff; /* Fallback, columns will define their own */
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .cv-header {
+            background-color: #F7931E; /* Orange color */
+            padding: 20px 30px;
+            color: #fff;
+            height: 80px; /* Fixed height for better control of overlap */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .cv-header h1 {
+                margin: 0 0 10px 0;
+                font-size: 28px;
+                text-align: center;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .cv-header .job-title {
+                margin: 0;
+                text-align: center;
+                font-size: 16px;
+                font-weight: normal;
+                text-transform: uppercase;
+            }
+
+        .cv-body {
+            display: flex;
+            background-color: #fff; /* Ensure white background for the body content area */
+        }
+
+        .rounded-column {
+            width: 200px;
+            height: 300px;
+            background-color: #F7931E; /* Màu cam giống header */
+            border-radius: 100px; /* Nửa chiều rộng => hình cột tròn đứng */
+            margin: 0 auto 20px auto; /* Canh giữa và cách dưới */
+        }
+
+        .cv-left-column {
+            width: 23%; /* Approx 1/3 */
+            background-color: #fff; /* White background */
+            padding: 20px;
+            padding-top: 100px; /* Space for profile pic to sit "on top" of this padding */
+            margin-top: -70px; /* Pull up to overlap header (should match header effective content height or desired curve start) */
+            border-top-left-radius: 300px; /* Large radius for the curve, should match margin-top */
+            border-top-right-radius: 300px; /* Large radius for the curve, should match margin-top */
+            position: relative;
+            z-index: 10; /* Ensure it's above the header's default plane if any part of header extends */
+            box-shadow: 3px -2px 5px rgba(0,0,0,0.05); /* Subtle shadow for the curved
+                    part */
+            height: 1000px;
+            border-bottom-left-radius: 300px;
+            border-bottom-right-radius: 300px;
+        }
+
+        .profile-pic-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: -65px auto 25px auto; /* Pull up by half its height, relative to the padding-top point of .cv-left-column */
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+            position: relative; /* Needed for z-index if image had text over it, good practice */
+            background-color: #ccc; /* Fallback if image fails */
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .contact-info {
+            padding: 0 10px;
+            /* Indent contact info slightly */
+            font-weight: bold;
+            text-align: center;
+        }
+
+            .contact-info p {
+                margin-bottom: 12px;
+                font-size: 0.9em;
+                line-height: 1.4;
+                word-break: break-all;
+            }
+
+            .contact-info small { /* The label "Email", "Điện thoại" */
+                display: block;
+                color: #555;
+                font-size: 0.85em;
+                margin-bottom: 2px;
+                font-weight: bold; /* Labels are boldish in image */
+            }
+
+        .left-section {
+            margin-top: 30px;
+            padding: 0 10px;
+        }
+
+        .left-section-title {
+            background-color: #F7931E;
+            color: white;
+            padding: 7px 15px;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+            .skill-item strong {
+                display: block;
+                margin-bottom: 4px;
+                color: #222;
+                font-size: 0.95em;
+            }
+
+            .skill-item p {
+                margin: 0;
+                font-size: 0.9em;
+                color: #555;
+            }
+
+        .cv-right-column {
+            width: 66%;
+            padding: 25px; /* Standard padding for content */
+            padding-top: 15px; /* Align top content with visual line of left column */
+            background-color: #fff;
+        }
+
+        .right-section {
+            margin-bottom: 25px;
+        }
+
+        .right-section-title {
+            background-color: #F7931E;
+            color: white;
+            padding: 7px 15px;
+            font-size: 1.05em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: block; /* Make it full width */
+        }
+
+        .right-section p, .right-section ul {
+            margin-bottom: 10px;
+            color: #444;
+            font-size: 0.95em;
+        }
+
+        .right-section ul {
+            padding-left: 20px; /* Indent list items */
+            list-style-position: outside;
+        }
+
+            .right-section ul li {
+                margin-bottom: 6px;
+            }
+
+        .right-section strong { /* For emphasis within paragraphs like institution name, company name */
+            color: #222;
+            font-weight: bold;
+        }
+
+        .date-range {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+            display: block; /* Ensure it takes its own line if needed */
+        }
+
+        .certificate-item p {
+            margin-bottom: 10px;
+        }
+
+        .experience-item .company-role strong { /* Company Name, Role */
+            display: block;
+            font-size: 1em; /* Slightly larger or more prominent */
+            margin-bottom: 3px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <div class="cv-header">
+            <h1>NGUYỄN MAI ANH</h1>
+            <p class="job-title">NHÂN VIÊN KẾ TOÁN</p>
+        </div>
+
+        <div class="cv-body">
+            <div class="cv-left-column">
+                <div class="profile-pic-container">
+                    <!-- Use the provided image. If you have it locally, replace the URL. -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/ANH_TU_-_SEPTEMBER_2023.jpg/960px-ANH_TU_-_SEPTEMBER_2023.jpg" alt="Nguyễn Mai Anh" class="profile-pic">
+                </div>
+                <div class="rounded-column">
+                    <div class="contact-info">
+                        <p><small>Email</small>hetro@topcv.vn</p>
+                        <p><small>Điện thoại</small>(024) 6680 5588</p>
+                        <p><small>Địa chỉ</small>Quận A, Hà Nội</p>
+                        <p><small>Website</small>be.net/trungus</p>
+                    </div>
+                </div>
+
+
+
+                <div class="left-section skills-section">
+                    <h2 class="left-section-title">Các kỹ năng</h2>
+                    <div class="skill-item">
+                        <strong>Lập báo cáo tài chính</strong>
+                        <p>Lập báo cáo thu nhập, bảng cân đối kế toán, lưu chuyển tiền tệ.</p>
+                    </div>
+                    <div class="skill-item">
+                        <strong>Quản lý công nợ</strong>
+                        <p>Theo dõi công nợ của từng khách hàng, phân loại khách hàng, kiểm soát các báo cáo công nợ.</p>
+                    </div>
+                    <div class="skill-item">
+                        <strong>In ấn sổ sách tài chính</strong>
+                        <p>Sổ ngân hàng, sổ quỹ, sổ cái các tài khoản.</p>
+                    </div>
+                    <div class="skill-item">
+                        <strong>Xử lý chứng từ</strong>
+                        <p>Nhận diện các loại chứng từ phát sinh, lập chứng từ, sắp xếp và lưu trữ chứng từ.</p>
+                    </div>
+                    <div class="skill-item">
+                        <strong>Hạch toán thu chi</strong>
+                        <p>Nắm vững các quy định, chứng từ, sổ sách liên quan đến thu chi.</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <div class="cv-right-column">
+                <div class="right-section summary-section">
+                    <h2 class="right-section-title">Mục tiêu nghề nghiệp</h2>
+                    <p>Hơn 3 năm kinh nghiệm làm công việc kế toán tại các công ty. Thành thạo trong việc xử lý chứng từ, thu chi, sử dụng các phần mềm Excel, Misa và làm việc với cơ quan thuế. Mong muốn được làm việc tại vị trí Nhân viên kế toán của công ty để đóng góp hoàn thiện các công việc kế toán của công ty theo đúng quy định pháp luật.</p>
+                </div>
+
+                <div class="right-section education-section">
+                    <h2 class="right-section-title">Học vấn</h2>
+                    <p><strong>Học Viện Ngân Hàng, CHUYÊN NGÀNH KẾ TOÁN</strong></p>
+                    <p class="date-range">2016 - 2020</p>
+                    <p>Tốt nghiệp loại: Giỏi</p>
+                </div>
+
+                <div class="right-section certifications-section">
+                    <h2 class="right-section-title">Chứng chỉ</h2>
+                    <div class="certificate-item">
+                        <p><strong>2022:</strong><br>Chứng chỉ ACCA (Chartered Certified Accountants)</p>
+                    </div>
+                    <div class="certificate-item">
+                        <p><strong>2021:</strong><br>Chứng chỉ CIA (Certified Internal Auditor)</p>
+                    </div>
+                    <div class="certificate-item">
+                        <p><strong>2021:</strong><br>KHÓA HỌC KỸ NĂNG SỬ DỤNG EXCEL</p>
+                    </div>
+                </div>
+
+                <div class="right-section experience-section">
+                    <h2 class="right-section-title">Kinh nghiệm làm việc</h2>
+                    <div class="experience-item">
+                        <p class="company-role"><strong>Công ty X, KẾ TOÁN TỔNG HỢP</strong></p>
+                        <p class="date-range">09/2022 - Đến nay</p>
+                        <ul>
+                            <li>Tiếp nhận, kiểm tra tính chính xác, hợp lý, hợp lệ của các chứng từ kế toán và sắp xếp, lưu trữ theo quy định công ty.</li>
+                            <li>Hạch toán, tổng hợp thu - chi phát sinh lên phần mềm kế toán.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
