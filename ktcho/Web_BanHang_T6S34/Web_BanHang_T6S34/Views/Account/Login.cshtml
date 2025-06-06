@@ -1,0 +1,123 @@
+﻿@model Web_BanHang_T6S34.Models.ViewModels.LoginViewModel
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="login-header">
+    <h2>Đăng nhập</h2>
+    <p>Vui lòng nhập thông tin để truy cập tài khoản của bạn</p>
+</div>
+
+<form asp-action="Login" method="post" class="needs-validation" novalidate>
+    <div asp-validation-summary="All" class="text-danger alert alert-danger" role="alert"></div>
+
+    <div class="form-floating">
+        <input asp-for="Email" class="form-control" id="email" placeholder="Email" required data-bs-toggle="tooltip" data-bs-placement="top" title="Nhập email đã đăng ký" />
+        <label asp-for="Email" for="email">Email</label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating position-relative">
+        <input asp-for="Password" class="form-control" id="password" placeholder="Mật khẩu" required data-bs-toggle="tooltip" data-bs-placement="top" title="Nhập mật khẩu của bạn" />
+        <label asp-for="Password" for="password">Mật khẩu</label>
+        <span class="password-toggle" onclick="togglePassword('password')">
+            <i class="fas fa-eye"></i>
+        </span>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="RememberMe" class="form-check-input" id="rememberMe" />
+        <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <span class="btn-text">Đăng nhập</span>
+        <span class="loading-spinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+        </span>
+    </button>
+
+    <div class="forgot-password">
+        <a href="@Url.Action("ForgotPassword", "Account")">Quên mật khẩu?</a>
+    </div>
+
+    <div class="social-login">
+        <p>Hoặc đăng nhập với</p>
+        <div class="social-buttons">
+            <a href="/Account/GoogleLogin" class="social-btn google"><i class="fab fa-google"></i></a>
+            <a href="/Account/FacebookLogin" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="/Account/TwitterLogin" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+
+    <div class="login-link">
+        <p>Chưa có tài khoản? <a href="@Url.Action("Register", "Account")">Đăng ký ngay</a></p>
+    </div>
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        // Password toggle functionality
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = document.querySelector(`#${inputId} + .password-toggle i`);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        // Form validation
+        $(document).ready(function () {
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Form validation
+            $('form').validate({
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Email: {
+                        required: "Vui lòng nhập email",
+                        email: "Vui lòng nhập email hợp lệ"
+                    },
+                    Password: {
+                        required: "Vui lòng nhập mật khẩu"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('text-danger');
+                    error.insertAfter(element.closest('.form-floating'));
+                },
+                submitHandler: function (form) {
+                    const button = $(form).find('.btn-primary');
+                    button.addClass('loading');
+                    button.prop('disabled', true);
+                    setTimeout(() => {
+                        button.removeClass('loading');
+                        button.prop('disabled', false);
+                    }, 2000); // Giả lập thời gian xử lý
+                    form.submit();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,26 @@
+﻿@model Web_BanHang_T6S34.Models.Cart
+<h2>Giỏ hàng</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price</td>
+                </tr>
+        }
+    </tbody>
+</table>
+<form asp-action="Checkout" asp-controller="Cart" method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc muốn thanh toán?');">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Thanh toán</button>
+</form>
+

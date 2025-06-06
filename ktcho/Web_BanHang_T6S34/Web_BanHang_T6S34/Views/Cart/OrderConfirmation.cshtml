@@ -1,0 +1,23 @@
+﻿@model Web_BanHang_T6S34.Models.Order
+<h2>Xác nhận đơn hàng</h2>
+<p>Cảm ơn bạn đã đặt hàng! Mã đơn hàng: @Model.Id</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.OrderDetails)
+        {
+            <tr>
+                <td>@detail.Product.Name</td>
+                <td>@detail.Quantity</td>
+                <td>@detail.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>Tổng cộng: @Model.TotalAmount</p>

@@ -1,0 +1,141 @@
+﻿@model Web_BanHang_T6S34.Models.ViewModels.RegisterViewModel
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="register-header">
+    <h2>Đăng ký</h2>
+    <p>Vui lòng nhập thông tin để tạo tài khoản</p>
+</div>
+
+<a href="/" class="btn btn-outline-primary mb-3">
+    <i class="fas fa-arrow-left"></i> Quay lại
+</a>
+
+<form asp-action="Register" method="post" class="needs-validation" novalidate>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-floating">
+        <input asp-for="Email" class="form-control" id="email" placeholder="Email" required 
+               data-bs-toggle="tooltip" data-bs-placement="top" 
+               title="Nhập địa chỉ email hợp lệ để đăng ký tài khoản" />
+        <label asp-for="Email" for="email">Email</label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating position-relative">
+        <input asp-for="Password" class="form-control" id="password" placeholder="Mật khẩu" required 
+               data-bs-toggle="tooltip" data-bs-placement="top" 
+               title="Mật khẩu cần ít nhất 6 ký tự, bao gồm chữ hoa, số và ký tự đặc biệt" />
+        <label asp-for="Password" for="password">Mật khẩu</label>
+        <span class="password-toggle" onclick="togglePassword('password')">
+            <i class="fas fa-eye"></i>
+        </span>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating position-relative">
+        <input asp-for="ConfirmPassword" class="form-control" id="confirmPassword" placeholder="Xác nhận mật khẩu" required 
+               data-bs-toggle="tooltip" data-bs-placement="top" 
+               title="Nhập lại mật khẩu để xác nhận" />
+        <label asp-for="ConfirmPassword" for="confirmPassword">Xác nhận mật khẩu</label>
+        <span class="password-toggle" onclick="togglePassword('confirmPassword')">
+            <i class="fas fa-eye"></i>
+        </span>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="password-strength">
+        <div class="strength-meter">
+            <div class="strength-meter-fill"></div>
+        </div>
+        <span class="strength-text">Độ mạnh mật khẩu: Yếu</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span class="btn-text">Đăng ký</span>
+        <span class="loading-spinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i>
+        </span>
+    </button>
+
+    <div class="social-register">
+        <p>Hoặc đăng ký với</p>
+        <div class="social-buttons">
+            <a href="/Account/GoogleLogin" class="social-btn google">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="/Account/FacebookLogin" class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="/Account/TwitterLogin" class="social-btn twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="login-link">
+        <p>Đã có tài khoản? <a asp-controller="Account" asp-action="Login">Đăng nhập</a></p>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            const passwordInput = document.getElementById('password');
+            const strengthMeterFill = document.querySelector('.strength-meter-fill');
+            const strengthText = document.querySelector('.strength-text');
+
+            passwordInput.addEventListener('input', function () {
+                const value = passwordInput.value;
+                let strength = 0;
+                let feedback = '';
+
+                if (value.length > 0) strength += 25;
+                if (value.length >= 8) strength += 25;
+                if (/[A-Z]/.test(value) && /[a-z]/.test(value)) strength += 25;
+                if (/[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value)) strength += 25;
+
+                strengthMeterFill.style.width = `${strength}%`;
+                strengthMeterFill.className = 'strength-meter-fill';
+
+                if (strength <= 25) {
+                    strengthMeterFill.classList.add('strength-weak');
+                    strengthText.textContent = 'Độ mạnh mật khẩu: Yếu';
+                    feedback = 'Thêm ký tự, số hoặc ký tự đặc biệt để tăng độ mạnh';
+                } else if (strength <= 50) {
+                    strengthMeterFill.classList.add('strength-fair');
+                    strengthText.textContent = 'Độ mạnh mật khẩu: Trung bình';
+                    feedback = 'Sử dụng thêm chữ hoa hoặc ký tự đặc biệt';
+                } else if (strength <= 75) {
+                    strengthMeterFill.classList.add('strength-good');
+                    strengthText.textContent = 'Độ mạnh mật khẩu: Tốt';
+                    feedback = 'Mật khẩu khá tốt, thêm ký tự để mạnh hơn';
+                } else {
+                    strengthMeterFill.classList.add('strength-strong');
+                    strengthText.textContent = 'Độ mạnh mật khẩu: Mạnh';
+                    feedback = 'Mật khẩu rất an toàn!';
+                }
+
+                strengthText.innerHTML = `${strengthText.textContent}<br><small>${feedback}</small>`;
+            });
+        });
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.parentElement.querySelector('.password-toggle i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+}

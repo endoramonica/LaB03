@@ -1,0 +1,16 @@
+﻿@model Web_BanHang_T6S34.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <p>Bạn có chắc muốn xóa danh mục <strong>@Model.Name</strong>?</p>
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

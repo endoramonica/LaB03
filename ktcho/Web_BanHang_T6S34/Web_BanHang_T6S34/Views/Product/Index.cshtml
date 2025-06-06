@@ -1,0 +1,175 @@
+﻿@model List<Web_BanHang_T6S34.Models.Product>
+@{
+    Layout = "_ProductLayout";
+    //ViewData["Title"] = "Danh sách sản phẩm";
+}
+<div class="container">
+    <h2>Danh sách sản phẩm</h2>
+
+    <div class="add-btn-container">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Thêm sản phẩm mới
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="products-grid">
+            @foreach (var product in Model)
+            {
+                <div class="product-card">
+                    <div class="product-badge">HOT</div>
+
+                    <div class="product-image">
+                        <img src="/@product.ImageUrl" alt="@product.Name" />
+                    </div>
+
+                    <div class="product-info">
+                        <h3 class="product-name">@product.Name</h3>
+                        <div class="product-price">@product.Price.ToString("N0")</div>
+
+                        <div class="product-actions">
+                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Sửa
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger"
+                               onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                <i class="fas fa-trash"></i> Xóa
+                            </a>
+                        </div>
+
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="add-to-cart-form">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <h3>Chưa có sản phẩm nào</h3>
+            <p>Hãy thêm sản phẩm đầu tiên của bạn!</p>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm sản phẩm
+            </a>
+        </div>
+    }
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+    // Add some interactive JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add hover effect to product cards
+        const productCards = document.querySelectorAll('.product-card');
+
+        productCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click animation to buttons
+        const buttons = document.querySelectorAll('.btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add loading animation to add to cart buttons
+        const addToCartForms = document.querySelectorAll('.add-to-cart-form');
+
+        addToCartForms.forEach(form => {
+            form.addEventListener('submit', function() {
+                const button = this.querySelector('.btn-success');
+                const originalText = button.innerHTML;
+
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang thêm...';
+                button.disabled = true;
+
+                // Re-enable after 2 seconds (adjust based on your needs)
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            });
+        });
+    });
+</script>
+
+<style>
+    /* Ripple effect for buttons */
+    .btn {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: rippleEffect 0.6s linear;
+        pointer-events: none;
+    }
+
+    
+
+    /* Additional hover effects */
+    .product-card .product-image {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-card:hover .product-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+        z-index: 1;
+    }
+
+    /* Improved button states */
+    .btn:active {
+        transform: translateY(1px);
+    }
+
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+</style>

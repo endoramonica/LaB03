@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ModernStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="main-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-store me-2"></i>
+                        ModernStore
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-home me-1"></i>
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">
+                                    <i class="fas fa-shopping-bag me-1"></i>
+                                    Products
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Categories" asp-action="Index">
+                                    <i class="fas fa-list me-1"></i>
+                                    Categories
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Privacy
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="search-container d-none d-md-block me-3">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search products..." id="searchInput">
+                        </div>
+
+                        <div class="user-actions">
+                            <a class="action-btn" title="Wishlist" asp-area="" asp-controller="Wishlist" asp-action="Index">
+                                <i class="fas fa-heart"></i>
+                                <span class="badge-notification">3</span>
+                            </a>
+                            <a class="action-btn" title="Shopping Cart" asp-area="" asp-controller="Cart" asp-action="Index">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="badge-notification">5</span>
+                            </a>
+                           
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content" role="main">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer class="footer border-top">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h5>Company</h5>
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="Careers">Careers</a>
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="News">News</a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5>Customer Service</h5>
+                        <a class="footer-link" asp-area="" asp-controller="Support" asp-action="Index">Support Center</a>
+                        <a class="footer-link" asp-area="" asp-controller="Support" asp-action="Returns">Returns</a>
+                        <a class="footer-link" asp-area="" asp-controller="Support" asp-action="Shipping">Shipping Info</a>
+                        <a class="footer-link" asp-area="" asp-controller="Support" asp-action="FAQ">FAQ</a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5>Connect</h5>
+                        <a href="https://www.facebook.com" class="footer-link" target="_blank" rel="noopener">
+                            <i class="fab fa-facebook me-2"></i>Facebook
+                        </a>
+                        <a href="https://www.twitter.com" class="footer-link" target="_blank" rel="noopener">
+                            <i class="fab fa-twitter me-2"></i>Twitter
+                        </a>
+                        <a href="https://www.instagram.com" class="footer-link" target="_blank" rel="noopener">
+                            <i class="fab fa-instagram me-2"></i>Instagram
+                        </a>
+                        <a href="https://www.linkedin.com" class="footer-link" target="_blank" rel="noopener">
+                            <i class="fab fa-linkedin me-2"></i>LinkedIn
+                        </a>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to get updates on new products and offers.</p>
+                        <form class="newsletter-form" asp-area="" asp-controller="Newsletter" asp-action="Subscribe" method="post">
+                            <div class="input-group">
+                                <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>
+                        © @DateTime.Now.Year - ModernStore by NhuQuynh. All rights reserved. |
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a> |
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="Terms">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                // Add your search logic here or make AJAX call to search controller
+                console.log('Searching for:', query);
+            });
+
+            // Enter key search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = e.target.value.trim();
+                    if (query) {
+                        window.location.href = `/Products/Search?q=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+
+        // Add loading state to buttons
+                document.querySelectorAll('.btn:not(.no-loading)').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.type !== 'submit') return;
+
+                const form = this.closest('form');
+                const originalText = this.innerHTML;
+                this.innerHTML = '<span class="loading"></span> Loading...';
+                this.disabled = true;
+
+                // Submit form ngay lập tức
+                if (form) {
+                    form.submit();
+                }
+
+                // Khôi phục trạng thái sau 1 giây (tùy chọn, có thể bỏ nếu không cần)
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.disabled = false;
+                }, 1000);
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.backdropFilter = 'blur(25px)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Shopping cart update animation
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const badge = this.querySelector('.badge-notification');
+                if (badge) {
+                    badge.style.animation = 'none';
+                    badge.offsetHeight; // Trigger reflow
+                    badge.style.animation = 'pulse 0.5s ease-in-out';
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

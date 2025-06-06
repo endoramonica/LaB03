@@ -1,0 +1,30 @@
+﻿@model Web_BanHang_T6S34.Models.Product
+
+
+
+<div class="card h-100 shadow-sm">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text text-primary fw-bold">@Model.Price.ToString("n0") VNĐ</p>
+
+        <!-- Xem chi tiết -->
+        <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">
+            Xem chi tiết
+        </a>
+
+        <!-- Thêm vào giỏ hàng -->
+        <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+            <input type="hidden" name="productId" value="@Model.Id" />
+            <button type="submit" class="btn btn-success btn-sm">Thêm vào giỏ</button>
+        </form>
+
+        <!-- Trở về Index -->
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary btn-sm mt-2">Về danh sách</a>
+
+        <!-- Sửa sản phẩm -->
+        <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-sm mt-2">
+            Sửa
+        </a>
+    </div>
+</div>
